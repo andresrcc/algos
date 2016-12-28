@@ -27,12 +27,6 @@ void traverse(Node *top)
 
 
 //stack
-struct Node
-{
-    int d;
-    struct Node *next;    
-};
- 
 class mystack
 {
     private:
