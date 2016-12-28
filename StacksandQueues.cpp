@@ -3,19 +3,45 @@
 //reverse
 //find a loop
 
+//// Linked list node
+ struct Node{
+    int d;
+    Node* next;
+     
+    Node(int data){
+        d = data;
+        next = NULL;
+    }
+};
+
+
+void traverse(Node *top)
+{
+   if (top == NULL) return;
+        
+    Node* T = top;
+    
+    while (ptr != NULL)
+        ptr = ptr->next;
+}
+
+
 //stack
 struct Node
 {
     int d;
     struct Node *next;    
-}*top;
+};
  
 class mystack
 {
+    private:
+        Node* top;
     public:
-        Node *push(Node *, int);
-        Node *pop(Node *);
-        void traverse(Node *);
+        Node* push(Node*, int);
+        Node* pop(Node*);
+        void traverse(Node*);
+        
         mystack()
         {
             top = NULL;
@@ -23,10 +49,10 @@ class mystack
 };
  
 
-Node* mystack::push(Node *top, int data)
+Node* mystack::push(Node* top, int data)
 {
 	//create new element
-    Node *T;
+    Node* T;
     T = new Node;
     T->d = data;
 	
@@ -38,20 +64,19 @@ Node* mystack::push(Node *top, int data)
     return top;
 }
  
-Node* mystack::pop(Node *top)
+Node* mystack::pop(Node* top)
 {
     if (top == NULL)
         return NULL;
 	
 	//store top in temp
-	Node* T = top;
+    Node* T = top;
 	
 	//next become new top
     top = top->next;
 	
 	//delete old top
     delete(T);
-	
 	//return new top? (should be optional)
     return top;
 }
@@ -60,8 +85,8 @@ Node* mystack::pop(Node *top)
 //Basic queue
 class Queue{
     private:
-        Node *rear;
-        Node *front;
+        Node* rear;
+        Node* front;
     public:
         Queue();
         void push();
@@ -70,28 +95,25 @@ class Queue{
 };
 
 Queue::Queue(){
-
     rear = NULL;
     front = NULL;
 }
 
 void Queue::push(int data){
-
-    Node *T = new Node(d);
-
+    Node* T = new Node(d);
+        
     if(front == NULL)
         front = T;
     else
-		rear->next = T;
-	
+	rear->next = T;
+        
     rear = T;
-
 }
 
 void Queue::pop(){
-	if(front == NULL) return;
-	
-    Node *T = front;
-	front = front->next;
-	delete T;
+    if(front == NULL) return;
+        
+    Node* T = front;
+    front = front->next;
+    delete T;
 }
