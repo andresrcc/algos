@@ -38,3 +38,32 @@ void mergeSort(vector<int> &A){
 	
 	merge(A0,A1,a);
 }
+
+//Quicksort
+
+void quickSort(vector<int> A){
+	quickSort(A,0);
+}
+//notice how on each iteration: p increases and q decreases. And element at position j is either moved to the front, left where it is or moved to the back.
+void quickSort(vector<int>& A, int start){
+	int n = A.size();
+	if(n <= 1) return;
+	
+	int pivot = A[start + rand() % n];
+	
+	int p = start - 1;
+	int j = start; 
+	int q = start + n;
+	
+	// a[i .. p] < x < a[q..i+n-1]
+
+	while (j < q){
+		if(A[j] < pivot) swap(j++, ++p);  //move to left partition (beginning of array)
+		else if (A[j] > pivot) swap(j,--q); //move to right partition (end of array)
+		else j++ //keep in the middle
+	}
+	
+	quickSort(A, start, p - start + 1);
+	quickSort(A, q, n - (q - start ));
+	
+}
