@@ -56,20 +56,42 @@ Node* mystack::pop(Node *top)
     return top;
 }
  
+//queue
+//Basic queue
+class Queue{
+    private:
+        Node *rear;
+        Node *front;
+    public:
+        Queue();
+        void push();
+        void pop();
+        void peek();
+};
 
-void mystack::traverse(Node *top)
-{       
+Queue::Queue(){
 
-	if (top == NULL)
-		return;
-	
-    Node *T = top;
-	
-	while (ptr != NULL)
-		ptr = ptr->next;
-	//add a statement to print if want to.
+    rear = NULL;
+    front = NULL;
 }
 
+void Queue::push(int data){
 
-//queue
-//full queue implementation
+    Node *T = new Node(d);
+
+    if(front == NULL)
+        front = T;
+    else
+		rear->next = T;
+	
+    rear = T;
+
+}
+
+void Queue::pop(){
+	if(front == NULL) return;
+	
+    Node *T = front;
+	front = front->next;
+	delete T;
+}
