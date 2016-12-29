@@ -1,6 +1,6 @@
 //Heaps
 
-vector<int> BubbleDown(Node* A, int i){
+vector<int> BubbleDown(vector<int> A, int i){
   int l = 2 * i + 1;
   int r = 2 * i + 2;
 
@@ -13,7 +13,7 @@ vector<int> BubbleDown(Node* A, int i){
   if(r < A.size() && A[r] < A[min_i]) min_i = r;
 
   if(min_i != i){
-    swap(A[i], A[min_i]);
+    iter_swap(A.begin() + i, A.begin() + min_i);
     A = BubbleDown(A,min_i);
   }
 
@@ -39,7 +39,7 @@ vector<int> BubbleUp(vector<int> A, int i){
   return A;
 }
 
-vector<int> heapify(Node* A){
+vector<int> heapify(vector<int> A){
   for(int i = A.size() - 1; i >=0; i--)
     A = BubbleDown(A,i);
   return A;
