@@ -67,3 +67,42 @@ void quickSort(vector<int>& A, int start){
 	quickSort(A, q, n - (q - start ));
 	
 }
+
+vector<int> BubbleDown(vector<int> A, int i){
+  int l = 2 * i + 1;
+  int r = 2 * i + 2;
+
+  if(l >= A.size()) return A;
+
+  int min_i = i;
+
+  if(A[l] < A[i]) min_i = l;
+
+  if(r < A.size() && A[r] < A[min_i]) min_i = r;
+
+  if(min_i != i){
+    iter_swap(A.begin() + i, A.begin() + min_i);
+    A = BubbleDown(A,min_i);
+  }
+
+  return A;
+}
+
+vector<int> heapify(vector<int> A){
+  for(int i = A.size() - 1; i >=0; i--)
+    A = BubbleDown(A,i);
+  return A;
+}
+
+ void heapSort(vector<int> &A) {
+    vector<int> heap = heapify(A);
+	int n = A.size() - 1;
+	
+	while( n > 1){
+		iter_swap(heap.begin() + n, heap.begin());
+		BubbleDown(heap,0);
+		n--;
+	}
+	
+	A = heap.reverse();
+  }
