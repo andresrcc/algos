@@ -106,3 +106,28 @@ vector<int> heapify(vector<int> A){
 	
 	A = heap.reverse();
   }
+
+//integer sorting algorithms
+//Specialized for sorting small integers
+
+//counting sort
+void countingSort(vector<int> &A, int k) {
+  vector<int> C(k, 0);
+
+	//count ocurrences of A[i], hence the name "counting sort"
+  for (int i = 0; i < A.size(); i++)
+    C[A[i]]++;
+
+//extra effort in case elements of A have associated data
+//running sum of the counters, such that c[i] is number of elements in a less than or equal to i
+//I believe this is done to keep track of repeated elements and where in the array they should be added.
+  for (int i = 1; i < k; i++)
+    C[i] += C[i-1];
+  
+  //place the elements backwards.
+  vector<int> B(A.size());
+  for (int i = A.size()-1; i >= 0; i--)
+    B[--C[A[i]]] = A[i];
+
+  A = B;
+}
