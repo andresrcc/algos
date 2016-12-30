@@ -4,25 +4,30 @@
 //find a loop
 
 //// Linked list node
- struct Node{
+struct Node
+{
     int d;
     Node* next;
-     
-    Node(int data){
+
+    Node(int data)
+    {
         d = data;
-        next = NULL;
+        next = nullptr;
     }
 };
 
 
-void traverse(Node *top)
+void traverse_linked_list(Node* head)
 {
-   if (top == NULL) return;
-        
-    Node* T = top;
-    
-    while (ptr != NULL)
-        ptr = ptr->next;
+    if (head == nullptr) return;
+
+    Node* T = head;
+
+    while (T != nullptr)
+    {
+        cout << T->d << " " << endl;
+        T = T->next;
+    }
 }
 
 
