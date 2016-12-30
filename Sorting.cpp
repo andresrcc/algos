@@ -1,4 +1,4 @@
-// Comparison based sorting
+//---Comparison based sorting---//
 //merge, quicksort heapsort
 //dont care type of data sorted. They only compare data.
 //all take an input array a and sort its elements into a non-decreasing order in O(n log n)
@@ -41,7 +41,7 @@ void mergeSort(vector<int> &A){
 
 //Quicksort
 
-void quickSort(vector<int> A){
+void quickSort(vector<int> &A){
 	quickSort(A,0);
 }
 //notice how on each iteration: p increases and q decreases. And element at position j is either moved to the front, left where it is or moved to the back.
@@ -67,6 +67,8 @@ void quickSort(vector<int>& A, int start){
 	quickSort(A, q, n - (q - start ));
 	
 }
+
+//Heapsort
 
 vector<int> BubbleDown(vector<int> A, int i){
   int l = 2 * i + 1;
@@ -107,7 +109,7 @@ vector<int> heapify(vector<int> A){
 	A = heap.reverse();
   }
 
-//integer sorting algorithms
+//----integer sorting algorithms----//
 //Specialized for sorting small integers
 
 //counting sort
