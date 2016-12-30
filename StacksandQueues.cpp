@@ -32,53 +32,41 @@ void traverse_linked_list(Node* head)
 
 
 //stack
-class mystack
+class MyStack
 {
-    private:
-        Node* top;
-    public:
-        Node* push(Node*, int);
-        Node* pop(Node*);
-        void traverse(Node*);
-        
-        mystack()
-        {
-            top = NULL;
-        }               
-};
- 
+	Node* top;
+public:
 
-Node* mystack::push(Node* top, int data)
-{
-	//create new element
-    Node* T;
-    T = new Node;
-    T->d = data;
-	
-	//have it's next point to head
-    T->next = top;
-	
-	//T becomes new top element of stack
-    top = T;
-    return top;
-}
- 
-Node* mystack::pop(Node* top)
-{
-    if (top == NULL)
-        return NULL;
-	
-	//store top in temp
-    Node* T = top;
-	
-	//next become new top
-    top = top->next;
-	
-	//delete old top
-    delete(T);
-	//return new top? (should be optional)
-    return top;
-}
+	MyStack()
+	{
+		top = nullptr;
+	}
+
+	void push(int data)
+	{
+
+		Node* T;
+		T = new Node(data);
+		T->next = top;
+		top = T;
+	}
+
+	void pop()
+	{
+		if (top == nullptr) return;
+
+		Node* T = top;
+
+		top = top->next;
+
+		delete(T);
+	}
+
+	Node* peek()
+	{
+		return top;
+	}
+};
  
 //queue
 //Basic queue
