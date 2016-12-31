@@ -2,33 +2,33 @@
 
 
 
-const rows vector = 4;
-int const columns = 4;
-//                                             value of each cell
-vector<vector<int>> matrix(rows, vector<int>(columns, 0));
-        //type         number of rows    number of columns
+const int rows = 3;
+const int columns = 3;
 
-void print_matrix(vector<vector<int>> matrix){
-	for(int i = 0; i < rows; i++){
-		for(int j = 0; j < columns; j++)
+vector<vector<int>> matrix(rows, vector<int>(columns, 0));
+
+void print_matrix(vector<vector<int>> matrix)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
 			cout << matrix[i][j] << " ";
 		cout << endl;
 	}
-
 }
 
-void create_matrix(){
-  int element;
-  vector<vector<int>> matrix;
-
-  for(int i = 0; i < rows; ++i){
-    vector<int> row;
-    for(int j = 0; j < columns; ++j){
-      cin >> element;
-      row.push_back(element);
-    }
-    matrix.push_back(row);
-  }
+void create_matrix(vector<vector<int>>& matrix)
+{
+	int element;
+	vector<int> row;
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < columns; ++j)
+		{
+			cin >> element;
+			matrix[i][j] = element;
+		}
+	}
 }
 
 //Rotate array
