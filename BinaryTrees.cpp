@@ -89,34 +89,35 @@ void printTree(Node* A)
 
 
 //Search Node
-Node* search(Node* A, int d, Node* T){
-  if(A == 0) return T;
-  if(d < A->value) T = search(A->left, d, T);
-  else if(d > A->value) T = search(A->right, d, T);
-  else return A;
+Node* search(Node* A, int d, Node* T)
+{
+    if (A == 0) return T;
+    if (d < A->d) T = search(A->left, d, T);
+    else if (d > A->d) T = search(A->right, d, T);
+    else return A;
 
-  return T;
+    return T;
 }
 
 //Search Node returning Success
-bool search(Node*A, int d, bool found){
+bool search(Node* A, int d, bool found)
+{
     if (!A) return found;
-    if(found) return found;
+    if (found) return found;
 
-    if(A->data == d){
-      found = true;
-      return found;
+    if (A->d == d)
+    {
+        found = true;
+        return found;
     }
 
-    if( d < A->data)
-      found = search(A->left, d, found);
-    if( d > A->data)
-      found = search(A->right, d, found);
+    if (d < A->d)
+        found = search(A->left, d, found);
+    if (d > A->d)
+        found = search(A->right, d, found);
 
     return found;
-
-  }
-
+}
 
 //Insert Node
 void insert(Node* A, int d){
