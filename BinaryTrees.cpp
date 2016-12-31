@@ -23,39 +23,71 @@ Node* findMin(Node*A) {
 	return A;
 }
 
-	//Delete Node
-	void deleteFromTree(Node*A, int d){
-	  if(A == 0) return;
+//Delete Node
+//Remember:
+//When passing the pointer to the node, 
+//either pass a reference to the pointer, 
+//or return the pointer to node after making the changes
+void deleteFromTree(Node* & A, int d)
+{
+	if (A == nullptr) return;
 
-	  if(d < A->d) deleteFromTree(A->left,d);
-	  else if (d > A->d) deleterFromTree(A->right, d);
-	  else{//found node to delete
-	    Node* T;
-	    //case 1: no children
-	    if(A->left == 0 && A->right == 0){
-	      delete(A);
-	      A = null;
-	    }
-	    //case 2: only one child
-	    else if (A->left == 0){
-	      T = A;
-	      A = A->right;
-	      delete(T);
-	      T= null;
-	    }else if (A->right == 0){
-	      T = A;
-	      A = A->left;
-	      delete(T);
-	      T = null;
-	    }//two children
-	    else{
-	      T = findMin(A->right);
-	      A->d = T->d; //copy them (study copy constructors)
-	      deleteFromTree(A->right, T->d);
-	    }
-	  }
+	if (d < A->d) deleteFromTree(A->left, d);
+	else if (d > A->d) deleteFromTree(A->right, d);
+	else
+	{//found node to delete
+		Node* T;
+		//case 1: no children
+		if (A->left == nullptr && A->right == nullptr)
+		{
+			delete(A);
+			A = nullptr;
+		}
+		//case 2: only one child
+		else if (A->left == nullptr)
+		{
+			T = A;
+			A = A->right;
+			delete(T);
+			T = nullptr;
+		}
+		else if (A->right == nullptr)
+		{
+			T = A;
+			A = A->left;
+			delete(T);
+			T = nullptr;
+		}//two children
+		else
+		{
+			T = findMin(A->right);
+			A->d = T->d; //copy them (study copy constructors)
+			deleteFromTree(A->right, T->d);
+		}
 	}
-	
+}
+
+//Print tree, BFS style
+void printTree(Node* A)
+{
+	queue<Node*> Q;
+
+	Q.push(A);
+	Node* T;
+
+	while(!Q.empty())
+	{
+		T = Q.front();Q.pop();
+		cout << T->d << " ";
+
+		if(T->left != nullptr)
+			Q.push(T->left); 
+		if(T->right != nullptr)
+			Q.push(T->right);
+	}
+}
+
+
 //Search Node
 Node* search(Node* A, int d, Node* T){
   if(A == 0) return T;
