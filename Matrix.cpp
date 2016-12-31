@@ -40,52 +40,38 @@ vector<int> rotateArray(vector<int> &A, int B) {
     return ret; 
 }
 
-//spiral matrix print
-#include "stdafx.h"
-#include <vector>
-#include <fstream>
-
-using namespace std;
-int main()
+void spiralPrint(vector<vector<int>> matrix)
 {
-	ifstream rf("input.txt");
-	ofstream wf("output.txt");
-	int rows, columns, steps, row, column, layer;
-	enum Direction {left, right, up, down};
+	int steps, row, column, layer;
+	enum Direction
+		{
+			left,
+			right,
+			up,
+			down
+		};
 	Direction direction = right;
 
-	rf >> rows >> columns;
-
-	vector<vector<int>>matrix(rows,vector<int>(columns,0));
-
-	for(int i = 0; i < rows; i++)
-	{
-		for(int j = 0; j < columns; j++)
-		{
-			rf >> matrix[i][j];
-			
-		}
-	}
-
-	steps = rows*columns;
+	steps = rows * columns;
 	row = 0;
 	column = 0;
 	layer = 0;
 
-	for(int i = 0; i < steps; i++)
+	for (int i = 0; i < steps; i++)
 	{
-		switch(direction)
+		cout << matrix[row][column] << " ";
+		switch (direction)
 		{
 		case right:
-			if(column == columns - layer - 1)
+			if (column == columns - layer - 1)
 			{
 				row++;
 				direction = down;
-				wf << endl;
+				cout << endl;
 			}
 			else
 			{
-				column++;	
+				column++;
 			}
 			break;
 		case down:
@@ -93,41 +79,40 @@ int main()
 			{
 				column--;
 				direction = left;
-				wf << endl;
-			}else
+				cout << endl;
+			}
+			else
 			{
 				row++;
 			}
 			break;
 		case left:
-			if(column == layer)
+			if (column == layer)
 			{
 				row--;
 				direction = up;
-				wf << endl;
-			}else
+				cout << endl;
+			}
+			else
 			{
 				column--;
 			}
 			break;
 		case up:
-			if(row == layer + 1)
+			if (row == layer + 1)
 			{
 				column++;
 				direction = right;
 				layer++;
-			}else
+			}
+			else
 			{
 				row--;
 			}
 
 			break;
 		}
-		wf << matrix[row][column] << " ";
 	}
-
-
-	return 0;
 }
 
 //Check for duplicates at k distance (manhattan distance) in a matrix.
