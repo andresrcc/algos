@@ -71,36 +71,34 @@ public:
 //queue
 //Basic queue
 class Queue{
-    private:
-        Node* rear;
-        Node* front;
-    public:
-        Queue();
-        void push();
-        void pop();
-        void peek();
+private:
+    Node* rear;
+    Node* front;
+public:
+
+    Queue(){
+        rear = NULL;
+        front = NULL;
+    }
+    void push(int d){
+        Node* T = new Node(d);
+
+        if(front == NULL)
+            front = T;
+        else
+            rear->next = T;
+
+        rear = T;
+    }
+
+    void pop(){
+        if(front == NULL) return;
+
+        Node* T = front;
+        front = front->next;
+        delete T;
+    }
+    int peek(){
+        return front->d;
+    };
 };
-
-Queue::Queue(){
-    rear = NULL;
-    front = NULL;
-}
-
-void Queue::push(int data){
-    Node* T = new Node(d);
-        
-    if(front == NULL)
-        front = T;
-    else
-	rear->next = T;
-        
-    rear = T;
-}
-
-void Queue::pop(){
-    if(front == NULL) return;
-        
-    Node* T = front;
-    front = front->next;
-    delete T;
-}
