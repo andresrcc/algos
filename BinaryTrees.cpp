@@ -130,11 +130,15 @@ void insert(Node* &A, int d)
     else insert(A->right, d);
 }
 
-  //Tree Height
-	int treeHeight(Node *A){
-	  if (A == 0) return 0;
-	  return 1 + (max(treeHeight(A->left), treeHeight(A->right)));
-	}
+//Tree Height
+/*
+Height of node – The height of a node is the number of edges on the longest downward path between that node and a leaf.
+*/
+int treeHeight(Node* A)
+{
+	if (A == 0) return -1;
+	return (max(treeHeight(A->left), treeHeight(A->right))) + 1;
+}
 
 	//Is balanced BST
 	bool isBalancedTree(Node* A){
