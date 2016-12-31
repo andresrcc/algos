@@ -1,18 +1,27 @@
 //Binary Search Trees
 
 struct Node {
-    int data;
-    bool visited;
-    vector<Node*> Nodes;
-  };
+	int d;
+	bool visited;
+	Node* left;
+	Node* right;
 
-
-	//find min node in BST
-	Node* findMin(Node*A){
-	  while(A->left != 0)
-	    A = A->left;
-	  return A;
+	Node(int data)
+	{
+		d = data;
+		visited = false;
+		left = nullptr;
+		right = nullptr;
 	}
+};
+
+
+//find min node in BST
+Node* findMin(Node*A) {
+	while (A->left != nullptr)
+		A = A->left;
+	return A;
+}
 
 	//Delete Node
 	void deleteFromTree(Node*A, int d){
