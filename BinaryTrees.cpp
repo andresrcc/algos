@@ -120,10 +120,14 @@ bool search(Node* A, int d, bool found)
 }
 
 //Insert Node
-void insert(Node* A, int d){
-  if(A == 0) A = new Node(d);
-  if(d < A->value) insert(A->left, d);
-  else insert(A->right, d);
+void insert(Node* &A, int d)
+{
+    if (A == 0) {
+        A = new Node(d);
+        return;
+    }
+    if (d < A->d) insert(A->left, d);
+    else insert(A->right, d);
 }
 
   //Tree Height
