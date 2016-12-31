@@ -32,13 +32,15 @@ void create_matrix(vector<vector<int>>& matrix)
 }
 
 //Rotate array
-vector<int> rotateArray(vector<int> &A, int B) {
-    vector<int> ret; 
-    for (int i = 0; i < A.size(); i++) {
-        ret.push_back(A[(i + B) % A.size()]);
-    }
-    return ret; 
+vector<int> rotateArrayLeft(vector<int> A, int B) {
+	vector<int> ret;
+	for (int i = 0; i < A.size(); i++) {
+		ret.push_back(A[(i - B) % A.size()]);
+	}
+	return ret;
 }
+
+//TODO: make rotate right
 
 void spiralPrint(vector<vector<int>> matrix)
 {
