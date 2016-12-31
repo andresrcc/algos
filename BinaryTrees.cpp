@@ -140,11 +140,12 @@ int treeHeight(Node* A)
 	return (max(treeHeight(A->left), treeHeight(A->right))) + 1;
 }
 
-	//Is balanced BST
-	bool isBalancedTree(Node* A){
-	  if (A == 0) return true;
-	  return abs(treeHeight(A->left) - treeHeight(A->right)) <= 1;
-	}
+//Is balanced BST
+bool isBalancedTree(Node* A)
+{
+	if (A == 0) return true;
+	return abs(treeHeight(A->left) - treeHeight(A->right)) <= 1;
+}
 
 	
 //Invert tree
