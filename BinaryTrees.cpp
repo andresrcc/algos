@@ -149,32 +149,19 @@ bool isBalancedTree(Node* A)
 
 	
 //Invert tree
-Node* InvertTree(Node * node){
+Node* InvertTree(Node* node)
+{
+    //base case
+    if (node == 0) return nullptr;
 
-	//base case
-	if(node == 0) return null;
-	
-	//get children
-	Node* right = InvertTree(node->left);
-	Node* left = InvertTree(node->right);
-	
-	//switch children on way back
-	node->left = right;
-	node->right = left;
-	
-	return node;
+    //get children
+    Node* left = InvertTree(node->left);
+    Node* right = InvertTree(node->right);
 
+
+    //switch children on way back
+    node->left = right;
+    node->right = left;
+
+    return node;
 }
-
-//O(n) because each node is visited only once. Traversals are different from searches which are O(log n)!
-
-
-/*
-Iteration 1 : i = 0, j = 0. arr[0] < arr[0] is false. So, the inner while loop breaks.
-Iteration 2: i =1, j = 0. arr[1] < arr[0] is true. j becomes 1.
-Iteration 3 : i = 1, j = 1. Condition false. We break. Note that j will remain 1 and is not reset back to 0.
-Iteration 4 : i = 2, j = 1. arr[2] < arr[1]. True. j = 2.
-Iteration 5 : i = 2, j = 2. Condition false. Break.
-Iteration 6 : i = 3, j = 2. arr[3] < arr[2]. True. j = 3.
-Iteration 7 : i = 3, j = 3. Condition false. Break.
-*/
