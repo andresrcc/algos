@@ -1,45 +1,110 @@
-//Hash Tables
-//Hash Tables
+//chaining (closed addressing)
+//Hash Node
 
-//With Chaining
+//using linked list node
 
-//PROCESS
+const int TABLE_SIZE = 128;
 
-vector<list<int>> t;
-int n; // total number of items in the hash table Also n <= t.size();
+struct Node
+{
+	int key;
+	int value;
+	Node* next;
 
-bool add(int x){
-	if(find(x) != null) return false; //if element exists dont add
-	if(n+1 > t.size()) resize(); //how to resize vector or list????
-	
-	t[hash(x)].push_back(x);
-	n++;
-	return true;
-}
+	Node(int key_param, int value_param)
+	{
+		key = key_param;
+		value = value_param;
+		next = nullptr;
+	}
+};
 
 
-int get(list<int> l; int i){
-	return *advance(l.begin(), i);
-}
+class HashMap
+{
+	vector<Node*> hash_table;
+public:
+	HashMap()
+	{
+		hash_table.assign(TABLE_SIZE, nullptr);
+	}
 
-int remove(int x){
-	int j = hash(x); //find index
-	for(int i = 0; i < t[j].size(); i++){
-		int y = get(t[j],i);
-		if(x == y){
-			t[j].erase(i);
-			n--;
-			return y;
+	int hash_function(int key)
+	{
+		return key % TABLE_SIZE;
+	}
+
+	int search(int key)
+	{
+		Node* node = hash_table[hash_function(key)];
+
+		if ( node == nullptr)
+			return -1;
+
+		Node* entry = node;
+		while (entry != nullptr && entry->key != key)
+		{
+			entry = entry->next;
+		}
+
+		if (entry == nullptr)
+			return -1;
+		return entry->value;
+	}
+
+	void insert(int key, int value)
+	{
+		Node* node = hash_table[hash_function(key)];
+
+		if ( node == nullptr)
+		{
+			node = new Node(key, value);
+			return;
+		}
+
+		Node* entry = node;
+
+		while (entry->next != nullptr)
+			entry = entry->next;
+		if (entry->key == key)
+			entry->value = value;
+		else
+			entry->next = new Node(key, value);
+	}
+
+	void remove(int key)
+	{
+		Node* node = hash_table[hash_function(key)];
+		if ( node == nullptr) return;
+
+		Node* prev = nullptr;
+		Node* entry = node;
+
+		while(entry->next != nullptr && entry->key != key)
+		{
+			prev = entry;
+			entry = entry->next;
+		}
+		if(entry->key == key)
+		{
+			if(prev == nullptr)
+			{
+				Node* next = entry->next;
+				delete entry;
+				node = next;
+			}
+			else
+			{
+				Node* next = entry->next;
+				delete entry;
+				prev->next = next;
+			}
 		}
 	}
-	return NULL;
-}
 
-int find(int x){
-	int j = hash(x);
-	for(int i = 0; i < t[j].size();i++)
-		int node = get(t[j],i);
-		if(x == node)
-			return node;
-	return NULL;
-}
+	~HashMap()
+	{
+		hash_table.clear();
+	}
+
+};
