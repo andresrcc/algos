@@ -10,33 +10,64 @@
 //sort each recursively
 //merge the sorted a0 and a1 to get the fully sorted a0
 
-void merge(vector<int> &A0, vector<int> &A1, vector<int>& A){
-	int i0 = 0, i1 = 0;
-	
-	for(int i = 0; i < A.size();i++){
-		if(i0 == A0.size())
-			A[i] = A1[i1++];
-		else if (i1 == A1.size())
-			A[i] = A0[i0++];
-		else if (A0[i0] < A1[i1])
-			A[i] = A0[i0++];
-		else
-			A[i] = A1[i1++];
-	}
+void print(vector<int> v)
+{
+	for (int i = 0; i < v.size(); i++) cout << v[i] << " ";
+	cout << endl;
 }
 
-void mergeSort(vector<int> &A){
-	if(A.size() <= 1) return;
-	
-	vector<int> A0,A1;
-	
-	A0.assign(A.begin(),A.begin() + A.size()/2);
-	A1.assign(A.begin() + A.size()/2 + 1, A.end());
+vector<int> merge(vector<int> left, vector<int> right)
+{
+	vector<int> result;
+	while ((int)left.size() > 0 || (int)right.size() > 0) {
 
-	mergeSort(A0);
-	mergeSort(A1);
-	
-	merge(A0,A1,a);
+		if ((int)left.size() > 0 && (int)right.size() > 0) {
+			if ((int)left.front() <= (int)right.front()) {
+				result.push_back((int)left.front());
+				left.erase(left.begin());
+			}
+			else {
+				result.push_back((int)right.front());
+				right.erase(right.begin());
+			}
+		}
+
+		else if ((int)left.size() > 0) {
+			for (int i = 0; i < (int)left.size(); i++)
+				result.push_back(left[i]);
+			break;
+		}
+
+		else if ((int)right.size() > 0) {
+			for (int i = 0; i < (int)right.size(); i++)
+				result.push_back(right[i]);
+			break;
+		}
+	}
+	return result;
+}
+
+vector<int> mergeSort(vector<int> m)
+{
+	if (m.size() <= 1)
+		return m;
+
+	vector<int> left, right, result;
+	int middle = ((int)m.size() + 1) / 2;
+
+	for (int i = 0; i < middle; i++) {
+		left.push_back(m[i]);
+	}
+
+	for (int i = middle; i < (int)m.size(); i++) {
+		right.push_back(m[i]);
+	}
+
+	left = mergeSort(left);
+	right = mergeSort(right);
+	result = merge(left, right);
+
+	return result;
 }
 
 //Quicksort
