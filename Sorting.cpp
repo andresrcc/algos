@@ -9,6 +9,16 @@
 //else split into two halves a0 = a[0], ... , a[n/2 - 1] and a1 = a[n/2] , ... , a[n-1]
 //sort each recursively
 //merge the sorted a0 and a1 to get the fully sorted a0
+#include "stdafx.h"
+#include <iostream>
+#include<vector>
+#include <queue>
+#include <list>
+#include <iomanip>
+
+using namespace std;
+
+#define SIZE 9
 
 void print(vector<int> v)
 {
@@ -70,33 +80,42 @@ vector<int> mergeSort(vector<int> m)
 	return result;
 }
 
-//Quicksort
-
-void quickSort(vector<int> &A){
-	quickSort(A,0);
+//QuickSort. Call as such qsort(a, 0, SIZE - 1);
+/* swap a[i] and a[j] */
+void swap(int a[], int i, int j)
+{
+	int temp;
+	temp = a[i];
+	a[i] = a[j];
+	a[j] = temp;
 }
-//notice how on each iteration: p increases and q decreases. And element at position j is either moved to the front, left where it is or moved to the back.
-void quickSort(vector<int>& A, int start){
-	int n = A.size();
-	if(n <= 1) return;
-	
-	int pivot = A[start + rand() % n];
-	
-	int p = start - 1;
-	int j = start; 
-	int q = start + n;
-	
-	// a[i .. p] < x < a[q..i+n-1]
 
-	while (j < q){
-		if(A[j] < pivot) swap(j++, ++p);  //move to left partition (beginning of array)
-		else if (A[j] > pivot) swap(j,--q); //move to right partition (end of array)
-		else j++ //keep in the middle
+
+/* sort arr[left]...arr[right] into increasing order */
+void qsort(int a[], int left_index, int right_index)
+{
+	int left, right, pivot;
+	if (left_index >= right_index) return;
+
+	left = left_index;
+	right = right_index;
+
+	// pivot selection
+	pivot = a[(left_index + right_index) / 2];
+
+	// partition
+	while (left <= right) {
+		while (a[left] < pivot) left++;
+		while (a[right] > pivot) right--;
+		if (left <= right) {
+			swap(a, left, right);
+			left++; right--;
+		}
 	}
-	
-	quickSort(A, start, p - start + 1);
-	quickSort(A, q, n - (q - start ));
-	
+
+	// recursion
+	qsort(a, left_index, right);
+	qsort(a, left, right_index);
 }
 
 //Heapsort
