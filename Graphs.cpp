@@ -101,31 +101,46 @@ vector<int> Y = {0,1, 0, -1};
   
 //Optimized search
 
+//Dijkstra with pointers
+struct Node {
+	int cost;
+	string id;
+	bool visited;
+	vector<Node*> Nodes;
+
+	Node(int data, string name)
+	{
+		cost = data;
+		visited = false;
+		id = name;
+	}
+};
+
 //implement > operator for your class Node
-bool operator > (const Node& l, const Node& r){
-  return l.d > r.d;
+bool operator < (const Node& l, const Node& r) {
+	return l.cost > r.cost;
 }
 
-vector<Node*> dijkstra(Node* A){
-  priority_queue<Node*, vector<Node*>, greater<Node*> P;
+vector<Node*> dijkstra(Node* A, Node* end) {
+	priority_queue<Node*, vector<Node*>, less<Node*>> P;
 
-  P.push(A);
-  Node* T;
-  vector<Node*> path;
+	P.push(A);
+	Node* T;
+	vector<Node*> path;
 
-  while(!P.empty()){
-    T = P.top(); P.pop();
-    T->visited = true;
-    path.push_back(T);
-    for(auto node : T->Nodes){
-      if(!node->visited)
-        P.push(node);
-    }
-  }
+	while (!P.empty()) {
+		T = P.top(); P.pop();
+		T->visited = true;
+		path.push_back(T);
+		if (T->id == end->id) return path;
+		for (auto node : T->Nodes) {
+			if (!node->visited)
+				P.push(node);
+		}
+	}
 
-  return path;
+	return path;
 }
-
 
 //representations for adjacency lists
 
