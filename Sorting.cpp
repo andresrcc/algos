@@ -186,3 +186,43 @@ void CountingSort(vector<int> arr)
 	for (i = min; i <= max; i++)
 		for (j = 0; j < B[i - min]; j++) arr[idx++] = i;
 }
+
+//radix sort
+const int MAX = 10;
+void RadixSortLSD(vector<int> a)
+{
+	int i, bucket[MAX], maxVal = 0, digitPosition = 1;
+	for (i = 0; i < a.size(); i++)
+	{
+		if (a[i] > maxVal) maxVal = a[i];
+	}
+
+	int pass = 1; // used to show the progress
+
+	/* maxVal: this variable decide the while-loop count
+	if maxVal is 3 digits, then we loop through 3 times */
+	while (maxVal / digitPosition > 0)
+	{
+		/* reset counter */
+		int digitCount[10] = {0};
+
+		/* count pos-th digits (keys) */
+		for (i = 0; i < a.size(); i++)
+			digitCount[a[i] / digitPosition % 10]++;
+
+		/* accumulated count */
+		for (i = 1; i < 10; i++)
+			digitCount[i] += digitCount[i - 1];
+
+		/* To keep the order, start from back side */
+		for (i = a.size() - 1; i >= 0; i--)
+			bucket[--digitCount[a[i] / digitPosition % 10]] = a[i];
+
+		/* rearrange the original array using elements in the bucket */
+		for (i = 0; i < a.size(); i++)
+			a[i] = bucket[i];
+
+		/* move up the digit position */
+		digitPosition *= 10;
+	}
+}
