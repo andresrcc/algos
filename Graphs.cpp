@@ -116,10 +116,10 @@ struct Node {
 	}
 };
 
-//implement > operator for your class Node
-bool operator < (const Node& l, const Node& r) {
-	return l.cost > r.cost;
-}
+//implement < operator for your class Node if necessary. But with above Node struct, seems to work fine.
+//bool operator < (const Node& l, const Node& r) {
+//	return l.cost < r.cost;
+//}
 
 vector<Node*> dijkstra(Node* A, Node* end) {
 	priority_queue<Node*, vector<Node*>, less<Node*>> P;
