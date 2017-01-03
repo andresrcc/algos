@@ -186,7 +186,8 @@ public:
 
 	~HashMapProbing()
 	{
-		hash_table.clear();
+		for(auto e : hash_table)
+			delete e;
 	}
 };
 
