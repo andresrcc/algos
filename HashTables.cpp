@@ -19,10 +19,23 @@ struct Node
 	}
 };
 
+//chaining
+struct Entry{
+	int key;
+	int value;
+	Entry* next;
+	
+	Entry(int k, int v){
+		key = k;
+		value = v;
+		next = nullptr;
+	}
+	
+};
 
 class HashMapChaining
 {
-	vector<Node*> hash_table;
+	vector<Entry*> hash_table;
 public:
 	HashMapChaining()
 	{
@@ -52,24 +65,23 @@ public:
 		return entry->value;
 	}
 
-	void insert(int key, int value)
-	{
-		Node* node = hash_table[hash_function(key)];
-
-		if ( node == nullptr)
-		{
-			node = new Node(key, value);
+	void insert(int key, int value){
+		int hash = hash_function(key);
+		
+		if(hash_table[hash] == nullptr){
+			hash_table[hash] = new Entry(key,value);
 			return;
 		}
-
-		Node* entry = node;
-
-		while (entry->next != nullptr)
+		
+		Entry* entry = hash_table[hash];
+		
+		while(entry->next != nullptr)
 			entry = entry->next;
-		if (entry->key == key)
+		
+		if(entry->key == key)
 			entry->value = value;
 		else
-			entry->next = new Node(key, value);
+			entry->next = new Entry(key, value);
 	}
 
 	void remove(int key)
