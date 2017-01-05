@@ -69,6 +69,7 @@ public:
 
 	int peek()
 	{
+		if (top == nullptr) return - 1;
 		return top->d;
 	}
 	
