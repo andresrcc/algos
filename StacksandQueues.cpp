@@ -87,12 +87,15 @@ class Queue{
 private:
     Node* rear;
     Node* front;
+    int count;
 public:
 
     Queue(){
         rear = nullptr;
         front = nullptr;
+	count = 0;
     }
+	
     void push(int d){
         Node* T = new Node(d);
 
@@ -102,6 +105,7 @@ public:
             rear->next = T;
 
         rear = T;
+	count++;
     }
 
     void pop(){
@@ -110,9 +114,15 @@ public:
         Node* T = front;
         front = front->next;
         delete T;
+	count--;
     }
     int peek(){
 	if(front == nullptr) return -1;
         return front->d;
     };
+
+    ~Queue(){
+    	for(int i = 0; i < count; i++)
+		pop();
+    }
 };
