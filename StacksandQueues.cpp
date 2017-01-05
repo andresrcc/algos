@@ -35,20 +35,25 @@ void traverse_linked_list(Node* head)
 class MyStack
 {
 	Node* top;
+	int count;
 public:
 
 	MyStack()
 	{
 		top = nullptr;
+		count = 0;
 	}
+	
+
+		
 
 	void push(int data)
 	{
-
-		Node* T;
-		T = new Node(data);
+		Node* T = new Node(data);
+		
 		T->next = top;
 		top = T;
+		count++;
 	}
 
 	void pop()
@@ -56,15 +61,22 @@ public:
 		if (top == nullptr) return;
 
 		Node* T = top;
-
 		top = top->next;
 
-		delete(T);
+		delete T;
+		count--;
 	}
 
-	Node* peek()
+	int peek()
 	{
-		return top;
+		return top->d;
+	}
+	
+	~MyStack(){
+		Node* T = top;
+		
+		for(int i = 0; i < count; i++)
+			pop();
 	}
 };
  
