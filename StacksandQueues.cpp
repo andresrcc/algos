@@ -89,13 +89,13 @@ private:
 public:
 
     Queue(){
-        rear = NULL;
-        front = NULL;
+        rear = nullptr;
+        front = nullptr;
     }
     void push(int d){
         Node* T = new Node(d);
 
-        if(front == NULL)
+        if(front == nullptr)
             front = T;
         else
             rear->next = T;
@@ -104,13 +104,14 @@ public:
     }
 
     void pop(){
-        if(front == NULL) return;
+        if(front == nullptr) return;
 
         Node* T = front;
         front = front->next;
         delete T;
     }
     int peek(){
+	if(front == nullptr) return -1;
         return front->d;
     };
 };
