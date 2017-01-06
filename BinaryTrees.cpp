@@ -1,167 +1,163 @@
-//Binary Search Trees
+/**
+To Do:
+*Include traversing in pre post and in order
+*Include IsBST method
+*Include sucessor and predecessor
+*Test further
+*/
 
-struct Node {
-	int d;
+struct Node{
+	int data;
 	bool visited;
 	Node* left;
 	Node* right;
-
-	Node(int data)
-	{
-		d = data;
+	
+	Node(int d){
+		data = d;
 		visited = false;
 		left = nullptr;
 		right = nullptr;
 	}
 };
 
-
-//find min node in BST
-Node* findMin(Node*A) {
-	while (A->left != nullptr)
-		A = A->left;
-	return A;
-}
-
-//Delete Node
-//Remember:
-//When passing the pointer to the node, 
-//either pass a reference to the pointer, 
-//or return the pointer to node after making the changes
-void deleteFromTree(Node* & A, int d)
-{
-	if (A == nullptr) return;
-
-	if (d < A->d) deleteFromTree(A->left, d);
-	else if (d > A->d) deleteFromTree(A->right, d);
-	else
-	{//found node to delete
-		Node* T;
-		//case 1: no children
-		if (A->left == nullptr && A->right == nullptr)
-		{
-			delete(A);
-			A = nullptr;
-		}
-		//case 2: only one child
-		else if (A->left == nullptr)
-		{
-			T = A;
-			A = A->right;
-			delete(T);
-			T = nullptr;
-		}
-		else if (A->right == nullptr)
-		{
-			T = A;
-			A = A->left;
-			delete(T);
-			T = nullptr;
-		}//two children
-		else
-		{
-			T = findMin(A->right);
-			A->d = T->d; //copy them (study copy constructors)
-			deleteFromTree(A->right, T->d);
-		}
-	}
-}
-
-//Print tree, BFS style
-void printTree(Node* A)
-{
-	queue<Node*> Q;
-
-	Q.push(A);
-	Node* T;
-
-	while(!Q.empty())
-	{
-		T = Q.front();Q.pop();
-		cout << T->d << " ";
-
-		if(T->left != nullptr)
-			Q.push(T->left); 
-		if(T->right != nullptr)
-			Q.push(T->right);
-	}
-}
-
-
-//Search Node
-Node* search(Node* A, int d, Node* T)
-{
-    if (A == 0) return T;
-    if (d < A->d) T = search(A->left, d, T);
-    else if (d > A->d) T = search(A->right, d, T);
-    else return A;
-
-    return T;
-}
-
-//Search Node returning Success
-bool search(Node* A, int d, bool found)
-{
-    if (!A) return found;
-    if (found) return found;
-
-    if (A->d == d)
-    {
-        found = true;
-        return found;
-    }
-
-    if (d < A->d)
-        found = search(A->left, d, found);
-    if (d > A->d)
-        found = search(A->right, d, found);
-
-    return found;
-}
-
-//Insert Node
-void insert(Node* &A, int d)
-{
-    if (A == 0) {
-        A = new Node(d);
-        return;
-    }
-    if (d < A->d) insert(A->left, d);
-    else insert(A->right, d);
-}
-
-//Tree Height
-/*
-Height of node – The height of a node is the number of edges on the longest downward path between that node and a leaf.
-*/
-int treeHeight(Node* A)
-{
-	if (A == 0) return -1;
-	return (max(treeHeight(A->left), treeHeight(A->right))) + 1;
-}
-
-//Is balanced BST
-bool isBalancedTree(Node* A)
-{
-	if (A == 0) return true;
-	return abs(treeHeight(A->left) - treeHeight(A->right)) <= 1;
-}
-
+class Tree{
+	Node* root;
+	public:
 	
-//Invert tree
-Node* InvertTree(Node* node)
-{
-    //base case
-    if (node == 0) return nullptr;
-
-    //get children
-    Node* left = InvertTree(node->left);
-    Node* right = InvertTree(node->right);
-
-
-    //switch children on way back
-    node->left = right;
-    node->right = left;
-
-    return node;
-}
+	Tree(){
+		root = nullptr;
+	}
+	
+	Node* findMin(){
+		if (root == nullptr) return nullptr;
+		return findMin(root);
+	}
+	
+	Node* findMin(Node* A){
+		Node* T = A;
+		while(T->left != nullptr)
+			T = T->left;
+		return T;
+	}
+	
+	int treeHeight(){
+		if (root == nullptr) return -1;
+		return treeHeight(root);
+	}
+	
+	int treeHeight(Node* A){
+		if(A == nullptr) return -1;
+		return max(treeHeight(A->left), treeHeight(A->right)) + 1;
+	}
+	
+	bool isBalancedBST(){
+		if(root == nullptr) return true;
+		return isBalancedBST(root);
+	}
+	
+	bool isBalancedBST(Node* A){
+		return abs(treeHeight(A->right) - treeHeight(A->left)) <= 1;
+	}
+	
+	void insert(int d){
+		if(root == nullptr) return;
+		insert(root, d);
+	}
+	
+	void insert(Node* A, int d){
+		if(A == nullptr){
+			A = new Node(d);
+			return;
+		}
+		
+		if(d < A->data) insert(A->left, d);
+		else insert(A->right,d);
+	}
+	
+	bool search(int d){
+		if (root == nullptr) return;
+		return search(root, d);
+	}
+	
+	bool search(Node*A, int d){
+		
+		bool found = false;
+		
+		if (d == A->data){
+			return true;
+		}
+		
+		
+		if(d < A->data) found = search(A->left,d);
+		else found = search(A->right, d);
+		
+		return found;
+	}
+	
+	Node* search(int d){
+		if(root == nullptr) return;
+		return search(root,d);
+	}
+	
+	Node* search(int d){
+		if(d == A->data){
+			return A;
+		}
+		
+		Node* T = nullptr;
+		
+		if(d < A->data) T = search(A->left, d);
+		else T = search(A->right, d);
+		
+		return T;
+	}
+	
+	void deleteNode(int d){
+		if(root = nullptr) return;
+		deleteNode(root, d);
+	}
+	
+	void deleteNode(Node* A, int d){
+		if (A == nullptr) return;
+		
+		if(d < A->data) deleteNode(A->left, data);
+		else if(d > A->data) deleteNode(A->right, data);
+		else{
+			if(A->left == nullptr && A->right == nullptr)
+				delete(A);
+			else if (A->left == nullptr && A->right != nullptr){
+				Node* T = A;
+				A = A->right;
+				delete T;
+			}else if(A->right == nullptr && A->left !- nullptr){
+				Node* T = A;
+				A = A->left;
+				delete T;
+			}
+			else{
+				//copy minimum on right to A, delete minimum
+				Node* T = findMin(A->right);
+				A->d = T->d; //(copy the data)
+				deleteNode(A->right, T->d);
+				
+			}
+		}
+	}
+	
+	void invertTree(){
+		if (root == nullptr) return;
+		root = invertTree(root);
+	}
+	
+	Node* invertTree(Node* A){
+		if(A == nullptr) return nullptr;
+		
+		Node* left = invertTree(A->left);
+		Node* right = invertTree(A->right);
+		
+		A->left = right;
+		A->right = left;
+		
+		return A;
+	}
+};
