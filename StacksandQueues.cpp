@@ -117,7 +117,7 @@ public:
     int peek(){
 	if(front == nullptr) return -1;
         return front->d;
-    };
+    }
 
     ~Queue(){
     	for(int i = 0; i < count; i++)
