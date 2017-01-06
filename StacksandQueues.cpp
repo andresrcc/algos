@@ -74,8 +74,6 @@ public:
 	}
 	
 	~MyStack(){
-		Node* T = top;
-		
 		for(int i = 0; i < count; i++)
 			pop();
 	}
