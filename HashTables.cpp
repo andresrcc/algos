@@ -3,23 +3,13 @@
 
 //using linked list node
 
+#include <vector>
+
+using namespace std;
+
 const int kTableSize = 128;
 
-struct Node
-{
-	int key;
-	int value;
-	Node* next;
-
-	Node(int k, int v)
-	{
-		key = k;
-		value = v;
-		next = nullptr;
-	}
-};
-
-//chaining
+//Chaining
 struct Entry{
 	int key;
 	int value;
@@ -49,12 +39,11 @@ public:
 
 	int Search(int key)
 	{
-		Node* node = hash_table_[HashFunction(key)];
+		Entry* entry = hash_table_[HashFunction(key)];
 
-		if ( node == nullptr)
+		if ( entry == nullptr)
 			return -1;
 
-		Node* entry = node;
 		while (entry != nullptr && entry->key != key)
 		{
 			entry = entry->next;
@@ -62,6 +51,7 @@ public:
 
 		if (entry == nullptr)
 			return -1;
+
 		return entry->value;
 	}
 
@@ -86,28 +76,29 @@ public:
 
 	void Remove(int key)
 	{
-		Node* node = hash_table_[HashFunction(key)];
-		if ( node == nullptr) return;
+		Entry* entry = hash_table_[HashFunction(key)];
 
-		Node* prev = nullptr;
-		Node* entry = node;
+		if ( entry == nullptr) return;
+
+		Entry* prev = nullptr;
 
 		while(entry->next != nullptr && entry->key != key)
 		{
 			prev = entry;
 			entry = entry->next;
 		}
+
 		if(entry->key == key)
 		{
 			if(prev == nullptr)
 			{
-				Node* next = entry->next;
+				Entry* next = entry->next;
 				delete entry;
-				node = next;
+				entry = next;
 			}
 			else
 			{
-				Node* next = entry->next;
+				Entry* next = entry->next;
 				delete entry;
 				prev->next = next;
 			}
@@ -122,19 +113,6 @@ public:
 };
 
 //Linear Probing
-
-struct Entry
-{
-	int key;
-	int value;
-
-	Entry(int k, int v)
-	{
-		key = k;
-		value = v;
-	}
-};
-
 
 class HashMapProbing
 {
@@ -196,3 +174,6 @@ public:
 	}
 };
 
+int main (){
+
+}
