@@ -3,7 +3,7 @@
 
 //using linked list node
 
-const int TABLE_SIZE = 128;
+const int kTableSize = 128;
 
 struct Node
 {
@@ -11,10 +11,10 @@ struct Node
 	int value;
 	Node* next;
 
-	Node(int key_param, int value_param)
+	Node(int k, int v)
 	{
-		key = key_param;
-		value = value_param;
+		key = k;
+		value = v;
 		next = nullptr;
 	}
 };
@@ -35,21 +35,21 @@ struct Entry{
 
 class HashMapChaining
 {
-	vector<Entry*> hash_table;
+	vector<Entry*> hash_table_;
 public:
 	HashMapChaining()
 	{
-		hash_table.assign(TABLE_SIZE, nullptr);
+		hash_table_.assign(kTableSize, nullptr);
 	}
 
-	int hash_function(int key)
+	int HashFunction(int key)
 	{
-		return key % TABLE_SIZE;
+		return key % kTableSize;
 	}
 
-	int search(int key)
+	int Search(int key)
 	{
-		Node* node = hash_table[hash_function(key)];
+		Node* node = hash_table_[HashFunction(key)];
 
 		if ( node == nullptr)
 			return -1;
@@ -65,15 +65,15 @@ public:
 		return entry->value;
 	}
 
-	void insert(int key, int value){
-		int hash = hash_function(key);
+	void Insert(int key, int value){
+		int hash = HashFunction(key);
 		
-		if(hash_table[hash] == nullptr){
-			hash_table[hash] = new Entry(key,value);
+		if(hash_table_[hash] == nullptr){
+			hash_table_[hash] = new Entry(key,value);
 			return;
 		}
 		
-		Entry* entry = hash_table[hash];
+		Entry* entry = hash_table_[hash];
 		
 		while(entry->next != nullptr)
 			entry = entry->next;
@@ -84,9 +84,9 @@ public:
 			entry->next = new Entry(key, value);
 	}
 
-	void remove(int key)
+	void Remove(int key)
 	{
-		Node* node = hash_table[hash_function(key)];
+		Node* node = hash_table_[HashFunction(key)];
 		if ( node == nullptr) return;
 
 		Node* prev = nullptr;
@@ -116,7 +116,7 @@ public:
 
 	~HashMapChaining()
 	{
-		hash_table.clear();
+		hash_table_.clear();
 	}
 
 };
@@ -128,77 +128,70 @@ struct Entry
 	int key;
 	int value;
 
-	Entry(int key, int value)
+	Entry(int k, int v)
 	{
-		this->key = key;
-		this->value = value;
+		key = k;
+		value = v;
 	}
 };
 
 
 class HashMapProbing
 {
-	vector<Entry*> hash_table;
+	vector<Entry*> hash_table_;
 public:
 	HashMapProbing()
 	{
-		hash_table.assign(TABLE_SIZE, nullptr);
+		hash_table_.assign(kTableSize, nullptr);
 	}
 
 
-	int hash_function(int key)
+	int HashFunction(int key)
 	{
-		return key % TABLE_SIZE;
+		return key % kTableSize;
 	}
 
 
-	void insert(int key, int value)
+	void Insert(int key, int value)
 	{
-		int hash = hash_function(key);
+		int hash = HashFunction(key);
 
-		while (hash_table[hash] != nullptr && hash_table[hash]->key != key)
+		while (hash_table_[hash] != nullptr && hash_table_[hash]->key != key)
 		{
-			hash = hash_function(hash + 1);
+			hash = HashFunction(hash + 1);
 		}
 
-		if (hash_table[hash] != nullptr)
-			delete hash_table[hash];
+		if (hash_table_[hash] != nullptr)
+			delete hash_table_[hash];
 
-		hash_table[hash] = new Entry(key, value);
+		hash_table_[hash] = new Entry(key, value);
 	}
 
-	int search(int key)
+	int Search(int key)
 	{
-		int hash = hash_function(key);
-		while (hash_table[hash] != nullptr && hash_table[hash]->key != key)
-		{
-			hash = hash_function(hash + 1);
-		}
+		int hash = HashFunction(key);
+		while (hash_table_[hash] != nullptr && hash_table_[hash]->key != key)
+			hash = HashFunction(hash + 1);
 
-		return hash_table[hash] == nullptr ? -1 : hash_table[hash]->value;
+		return hash_table_[hash] == nullptr ? -1 : hash_table_[hash]->value;
 	}
 
 
-	void remove(int key)
+	void Remove(int key)
 	{
-		int hash = hash_function(key);
+		int hash = HashFunction(key);
 
-		while (hash_table[hash] != nullptr)
-		{
-			if (hash_table[hash]->key == key)
-				break;
+		while (hash_table_[hash] != nullptr && hash_table_[hash]->key == key)
+			hash = HashFunction(hash + 1);
 
-			hash = hash_function(hash + 1);
-		}
+		if (hash_table_[hash] == nullptr) return;
 
-		if (hash_table[hash] == nullptr) return;
-
-		delete hash_table[hash];
+		delete hash_table_[hash];
 	}
 
 	~HashMapProbing()
 	{
-		for(auto e : hash_table)
+		for(auto e : hash_table_)
 			delete e;
 	}
 };
