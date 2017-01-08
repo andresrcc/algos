@@ -159,7 +159,7 @@ public:
 	{
 		int hash = HashFunction(key);
 
-		while (hash_table_[hash] != nullptr && hash_table_[hash]->key == key)
+		while (hash_table_[hash] != nullptr && hash_table_[hash]->key != key)
 			hash = HashFunction(hash + 1);
 
 		if (hash_table_[hash] == nullptr) return;
