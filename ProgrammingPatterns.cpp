@@ -1,18 +1,21 @@
-//singleton. Also, multithreaded
-//adapter
-//anything else? look at your course online (the one with the troll)
+
+//to make it Singleton thread safe for non fully c+11 compliant compilers 
+#include<mutex>
 
 class Singleton{
 private:
   static Singleton* instance;
   int data;
+  static once_flag flag;
+	
   Singleton(int value = 0){
-    data = 0;
+    data = value;
   }
+	
 public:
   static Singleton* get_instance(){
-    if(!instance)
-      instance = new Singleton;
+    if(instance == nullptr)
+      call_once(flag, [] {instance = new Singleton();});
     return instance;
   }
   void set_value(int value){
