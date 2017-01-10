@@ -94,4 +94,65 @@ int main()
 
 //Adapter design pattern translates the interface for one class into a compatible but different interface.
 
+//Factory Method design pattern. Returns an object
+
+//interface
+class Button {
+public:
+	virtual void paint() = nullptr;
+};
+ 
+//class implements button
+class OSXButton: public Button {
+public:
+	void paint() {
+		//
+	}
+};
+ 
+//class implements button
+class WindowsButton: public Button  {
+public:
+	void paint() {
+		//
+	}
+};
+ 
+//Button factory interface but can be concrete class returning its own objects.
+class GUIFactory {
+public:
+	virtual Button* createButton(string) = nullptr;
+};
+
+
+class Factory: public GUIFactory {
+public:
+	Button *createButton(string type) {
+		if( type == "Windows") {
+			return new WindowsButton;
+		}
+		else if(type == "OSX") {
+			return new OSXButton;
+		}
+	}
+};
+
+
+int main()
+{
+	GUIFactory* guiFactory;
+	Button *btn;
+
+
+	guiFactory = new Factory;
+
+
+	btn = guiFactory->createButton("OSX");
+	btn -> paint();
+	btn = guiFactory->createButton("Windows");
+	btn -> paint();
+
+
+	return 0;
+}
 
