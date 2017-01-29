@@ -80,43 +80,32 @@ vector<int> mergeSort(vector<int> m)
 	return result;
 }
 
-//QuickSort. Call as such qsort(a, 0, SIZE - 1);
-/* swap a[i] and a[j] */
-void swap(int a[], int i, int j)
-{
-	int temp;
-	temp = a[i];
-	a[i] = a[j];
-	a[j] = temp;
+//QuickSort
+int Partition(vector<int>& numbers, int left, int right, int pivot){
+    while(left <= right){
+        while(numbers[left] < pivot) left++;
+        while(numbers[right] > pivot) right--;
+
+        if(left <= right){
+            iter_swap(numbers.begin() + left,numbers.begin() + right);
+            left++;
+            right--;
+        }
+    }
+    return left;
 }
 
+void QuickSort(vector<int> &numbers, int left, int right){
+    if (left >= right) return; //nothing to sort
 
-/* sort arr[left]...arr[right] into increasing order */
-void qsort(int a[], int left_index, int right_index)
-{
-	int left, right, pivot;
-	if (left_index >= right_index) return;
+    int pivot = numbers[(left + right)/2];
+    int index = Partition(numbers, left, right, pivot);
+    QuickSort(numbers, left, index-1);
+    QuickSort(numbers, index, right);
 
-	left = left_index;
-	right = right_index;
 
-	// pivot selection
-	pivot = a[(left_index + right_index) / 2];
-
-	// partition
-	while (left <= right) {
-		while (a[left] < pivot) left++;
-		while (a[right] > pivot) right--;
-		if (left <= right) {
-			swap(a, left, right);
-			left++; right--;
-		}
-	}
-
-	// recursion
-	qsort(a, left_index, right);
-	qsort(a, left, right_index);
 }
+
 
 //Heapsort
 
